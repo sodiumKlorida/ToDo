@@ -31,7 +31,8 @@ class IssueBoardTest extends TestCase
             'status' => 'todo',
         ]);
 
-        $response = $this->get('/?search=stock&status=progress');
+        $response = $this->withSession(['app_password_verified' => true])
+            ->get('/?search=stock&status=progress');
 
         $response->assertOk();
         $response->assertSee('Stock data masih bisa minus');
@@ -42,8 +43,13 @@ class IssueBoardTest extends TestCase
     {
         $department = Department::create(['name' => 'Operasional']);
         $reference = 'Dokumentasi internal stok';
+        $csrf = 'test-token';
 
-        $this->post(route('issues.store'), [
+        $this->withSession([
+            '_token' => $csrf,
+            'app_password_verified' => true,
+        ])->post(route('issues.store'), [
+            '_token' => $csrf,
             'department_id' => $department->id,
             'title' => 'Pemeriksaan stok',
             'reference_url' => $reference,
@@ -54,10 +60,12 @@ class IssueBoardTest extends TestCase
         $issue = Issue::where('title', 'Pemeriksaan stok')->firstOrFail();
 
         $this->assertSame($reference, $issue->reference_url);
-        $this->get(route('issues.index'))
+        $this->withSession(['app_password_verified' => true])
+            ->get(route('issues.index'))
             ->assertSee($reference)
             ->assertDontSee('href="'.$reference.'"', false);
-        $this->get(route('issues.show', $issue))
+        $this->withSession(['app_password_verified' => true])
+            ->get(route('issues.show', $issue))
             ->assertSee($reference)
             ->assertDontSee('href="'.$reference.'"', false);
     }
@@ -72,10 +80,12 @@ class IssueBoardTest extends TestCase
             'status' => 'todo',
         ]);
 
-        $this->get(route('issues.edit', $issue))
+        $this->withSession(['app_password_verified' => true])
+            ->get(route('issues.edit', $issue))
             ->assertSee('Hapus Issue')
             ->assertSee('name="_method" value="DELETE"', false);
-        $this->get(route('issues.create'))->assertDontSee('Hapus Issue');
+        $this->withSession(['app_password_verified' => true])
+            ->get(route('issues.create'))->assertDontSee('Hapus Issue');
     }
 
     public function test_issue_can_be_deleted_from_the_edit_action(): void
@@ -87,10 +97,22 @@ class IssueBoardTest extends TestCase
             'issue_date' => '2026-09-15',
             'status' => 'todo',
         ]);
+        $csrf = 'test-token';
 
-        $response = $this->delete(route('issues.destroy', $issue));
+        $response = $this->withSession([
+            '_token' => $csrf,
+            'app_password_verified' => true,
+        ])->delete(route('issues.destroy', $issue), ['_token' => $csrf]);
 
         $response->assertRedirect(route('issues.index'));
         $this->assertDatabaseMissing('issues', ['id' => $issue->id]);
+    }
+
+    public function test_app_requires_password_before_accessing_the_board(): void
+    {
+        $this->get('/')->assertRedirect(route('app.password'));
+
+        $this->withSession(['app_password_verified' => true])
+            ->get('/')->assertOk();
     }
 }

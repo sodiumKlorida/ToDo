@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8.4
+    container_name: issue-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: mayadmi1
+      MYSQL_USER: mayadmi1
+      MYSQL_PASSWORD: "85&R9zB}JzciR7k4"
+      MYSQL_ROOT_PASSWORD: "rootpass123"
+    ports:
+      - "3307:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: issue-pma
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: "rootpass123"
+    ports:
+      - "8081:80"
+
+volumes:
+  dbdata:
