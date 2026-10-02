@@ -1,0 +1,70 @@
+{
+  "system_instruction": "Anda adalah AI Senior Fullstack Developer. Buatkan proyek backend Laravel lengkap dengan pengaturan database SQLite berdasarkan spesifikasi berikut.",
+  "project_context": {
+    "app_name": "Issue Board Operasional",
+    "tech_stack": {
+      "framework": "Laravel (versi terbaru)",
+      "database": "SQLite",
+      "frontend_styling": "Tailwind CSS (Neo-Brutalism Theme - sudah tersedia dalam file HTML)"
+    }
+  },
+  "database_schema": {
+    "tables": [
+      {
+        "name": "departments",
+        "description": "Menyimpan data departemen dari sidebar navigasi.",
+        "columns": [
+          { "name": "id", "type": "bigIncrements" },
+          { "name": "name", "type": "string", "example": "Operasional, Keuangan, HR, Keagenan, Purchasing" },
+          { "name": "timestamps", "type": "timestamps" }
+        ]
+      },
+      {
+        "name": "issues",
+        "description": "Menyimpan data kartu issue dari pengguna.",
+        "columns": [
+          { "name": "id", "type": "bigIncrements" },
+          { "name": "department_id", "type": "foreignId", "relation": "departments.id" },
+          { "name": "title", "type": "string", "example": "Stock data masih bisa minus" },
+          { "name": "reference_url", "type": "string", "nullable": true, "example": "https://domain.com/admin/stock" },
+          { "name": "issue_date", "type": "date" },
+          { "name": "image_path", "type": "string", "nullable": true, "description": "Path untuk menyimpan screenshot/gambar error" },
+          { "name": "status", "type": "enum", "values": ["todo", "progress", "done"], "default": "todo" },
+          { "name": "timestamps", "type": "timestamps" }
+        ]
+      }
+    ]
+  },
+  "core_features": {
+    "crud_operations": [
+      "Create Issue (dengan upload gambar/screenshot)",
+      "Read/List Issues (ditampilkan dalam bentuk grid card)",
+      "Update Issue (ubah status dari TO DO -> PROGRESS -> DONE)",
+      "Delete Issue"
+    ],
+    "search_and_filters": [
+      {
+        "type": "search",
+        "target": "issues.title",
+        "description": "Mencari issue berdasarkan kata kunci di judul teks."
+      },
+      {
+        "type": "filter_date",
+        "target": "issues.issue_date",
+        "description": "Menyaring issue berdasarkan tanggal persis (YYYY-MM-DD) dari input kalender custom."
+      },
+      {
+        "type": "filter_status",
+        "target": "issues.status",
+        "description": "Menyaring data berdasarkan dropdown status (todo, progress, done)."
+      }
+    ]
+  },
+  "deliverables_requested": [
+    "1. Konfigurasi file .env Laravel untuk menggunakan database SQLite.",
+    "2. File Migration dan Seeder (termasuk dummy data untuk departemen dan 3 issue awal).",
+    "3. IssueController.php dengan logika filtering (Search, Date, Status) di method index().",
+    "4. Model Issue.php dan Department.php beserta relasinya.",
+    "5. Route (web.php) yang menghubungkan frontend HTML dengan controller."
+  ]
+}
