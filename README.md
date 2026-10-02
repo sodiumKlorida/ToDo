@@ -1,58 +1,80 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Issue Board - User Manual
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Issue Board adalah aplikasi untuk mencatat dan mengelola issue yang terjadi di berbagai departemen. Aplikasi ini memudahkan pengguna untuk membuat, melihat, memperbarui, dan menghapus issue dengan status yang jelas.
 
-## About Laravel
+## Login awal
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Saat aplikasi dibuka untuk pertama kali, sistem akan menampilkan halaman password.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Password default: `issueboard123`
+- Setelah password benar, sesi browser akan aktif dan Anda bisa membuka halaman utama.
+- Jika password salah, sistem akan kembali menampilkan pesan error dan meminta input ulang.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Halaman utama
 
-## Learning Laravel
+Halaman utama menampilkan daftar issue yang sudah dibuat. Di sana Anda dapat:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- melihat daftar issue
+- mencari berdasarkan judul
+- memfilter berdasarkan status
+- menyaring berdasarkan departemen
+- membuka detail issue apabila diperlukan
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Membuat issue baru
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+1. Klik tombol `Tambah Issue`.
+2. Isi field berikut:
+   - departemen
+   - judul issue
+   - tanggal issue
+   - status (`todo`, `progress`, `done`)
+   - URL referensi bila ada
+   - gambar bila diperlukan
+3. Klik `Simpan`.
 
-## Agentic Development
+## Mengedit issue
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+1. Buka issue yang ingin diubah.
+2. Klik tombol `Edit`.
+3. Ubah field yang diperlukan.
+4. Simpan perubahan.
+
+## Menghapus issue
+
+1. Buka halaman edit issue.
+2. Klik tombol `Hapus Issue`.
+3. Konfirmasi penghapusan.
+4. Data akan dihapus dari sistem.
+
+## Manajemen gambar
+
+Jika issue dilengkapi dengan gambar, sistem secara otomatis menyimpan file ke storage aplikasi. Saat issue dihapus atau diganti, file gambar akan dihapus sesuai kebutuhan.
+
+## Catatan keamanan
+
+- Jangan membagikan password default ke publik.
+- Sebaiknya ganti password default setelah proses deploy atau penggunaan nyata.
+- Semua konfigurasi sensitif disimpan di file environment yang tidak ikut dikirim ke repository.
+
+## Jalankan aplikasi secara lokal
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer install
+php artisan migrate
+php artisan db:seed
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Lalu buka:
 
-## Contributing
+```text
+http://127.0.0.1:8000
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Akses user manual
 
-## Code of Conduct
+Dari halaman password awal, klik tombol:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+`Baca User Manual`
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+untuk membuka panduan ini tanpa harus masuk ke halaman utama aplikasi.

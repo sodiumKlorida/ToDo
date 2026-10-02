@@ -8,6 +8,10 @@ Route::get('/password', function () {
     return view('auth.password');
 })->name('app.password');
 
+Route::get('/user-manual', function () {
+    return view('manual.user-manual');
+})->name('user.manual');
+
 Route::post('/password', function () {
     $expectedPassword = env('APP_PASSWORD', 'issueboard123');
     $password = request('password');

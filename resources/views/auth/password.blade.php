@@ -35,6 +35,12 @@
                 Masuk
             </button>
         </form>
+
+        <div class="mt-4">
+            <a href="{{ route('user.manual') }}" class="block w-full rounded-xl border-4 border-slate-900 bg-slate-200 px-4 py-3 text-center text-sm font-black shadow-[3px_3px_0_#111827] transition hover:-translate-y-0.5">
+                Baca User Manual
+            </a>
+        </div>
     </div>
 </body>
 </html>
