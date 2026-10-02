@@ -75,6 +75,6 @@ http://127.0.0.1:8000
 
 Dari halaman password awal, klik tombol:
 
-`Baca User Manual`
+`[Baca User Manual](https://mayadmin.my.id/user-manual)`
 
 untuk membuka panduan ini tanpa harus masuk ke halaman utama aplikasi.
